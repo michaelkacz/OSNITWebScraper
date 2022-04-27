@@ -24,8 +24,8 @@ buttonframe = LabelFrame(winD, padx=5, pady=5)
 buttonframe.pack(padx=10, pady=10)
 
 #Facebook button
-facebookbutton = Button(buttonframe, text="Facebook", padx=60, pady=40, bg="#6495ED")
-facebookbutton.grid()
+redditbutton = Button(buttonframe, text="Reddit", padx=60, pady=40, bg="#F28C28")
+redditbutton.grid()
 
 #onclick to web scrape twitter
 def twittercrawlclick():
