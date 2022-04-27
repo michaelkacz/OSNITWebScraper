@@ -44,11 +44,11 @@ def twittercrawlclick():
         twitterscrape.Limit = 500
         twitterscrape.Store_csv = True
         #output to topic with csv file extension
-        twitterscrape.Output = "test.csv"
+        twitterscrape.Output = twitterstring + ".csv"
 
         #runs search on specified topic
         twint.run.Search(twitterscrape)
-        df = pd.read_csv('test.csv')
+        df = pd.read_csv(twitterstring + '.csv')
 
     #frame to house enter button
     twitterframe = LabelFrame(winD, padx=5, pady=5)
