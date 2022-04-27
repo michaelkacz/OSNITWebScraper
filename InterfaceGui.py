@@ -2,6 +2,12 @@
 from cgitb import text
 from tkinter import *
 from xml.sax.xmlreader import InputSource
+import twint
+import pandas as pd
+#To install twint:
+    #pip3 install twint
+    #pip3 install --user --upgrade git+https://github.com/twintproject/twint.git@origin/master#egg=twint
+    #pip install aiohttp==3.7.0
 
 #create a window for GUI
 #instantiate an instance of WinD
@@ -17,13 +23,44 @@ winD.config(background="#8c1414");
 buttonframe = LabelFrame(winD, padx=5, pady=5)
 buttonframe.pack(padx=10, pady=10)
 
-#create buttons for GUI
-#Twitter button
-twitterbutton = Button(buttonframe, text="Twitter", padx=60, pady=40, bg="blue")
-twitterbutton.grid()
 #Facebook button
 facebookbutton = Button(buttonframe, text="Facebook", padx=60, pady=40, bg="#6495ED")
 facebookbutton.grid()
+
+#onclick to web scrape twitter
+def twittercrawlclick():
+    #generate label
+    twitterlabel = Label(winD, text="Please enter topic:")
+    twitterlabel.pack()
+    #generate entry
+    twitterentry = Entry(winD)
+    twitterentry.pack()
+
+    def topiccrawl():
+        #get string from entry in previous function
+        twitterstring = twitterentry.get()
+        twitterscrape = twint.Config()
+        twitterscrape.Search = [twitterstring]
+        twitterscrape.Limit = 500
+        twitterscrape.Store_csv = True
+        #output to topic with csv file extension
+        twitterscrape.Output = twitterstring + ".csv"
+
+        #runs search on specified topic
+        twint.run.Search(twitterscrape)
+        df = pd.read_csv(twitterstring + '.csv')
+
+    #frame to house enter button
+    twitterframe = LabelFrame(winD, padx=5, pady=5)
+    twitterframe.pack(padx=10, pady=10)
+
+    #scrape twitter topic button
+    topicbutton = Button(twitterframe, text="Scrape Topic", padx=50, command=topiccrawl)
+    topicbutton.grid()
+
+#Twitter button
+twitterbutton = Button(buttonframe, text="Twitter", padx=60, pady=40, bg="blue", command=twittercrawlclick)
+twitterbutton.grid()
 
 #onclick function to open input 
 def webcrawlclick():
