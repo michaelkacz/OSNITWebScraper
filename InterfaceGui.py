@@ -22,7 +22,7 @@ import time
 #instantiate an instance of WinD
 winD = tk.ThemedTk();
 winD.get_themes();
-winD.set_theme("smog");
+winD.set_theme("arc");
 #change the size of winD, using geometry function
 
 #create title for window frame, WinD
@@ -92,15 +92,13 @@ def RedditCrawlClick():
 
     #frame to house enter button
     redditFrame = ttk.LabelFrame(winD)
-    redditFrame.pack(padx=15, pady=15)
+    redditFrame.pack(padx=25, pady=25)
 
     #scrape subreddits button
     topicbutton = ttk.Button(redditFrame, text="Get Reddit Data", command=RedditStart)
     topicbutton.pack(padx=50)
 
-#end of reddit API
-
-#create frame to house buttons
+#end of reddit API#create frame to house buttons
 buttonframe = ttk.LabelFrame(winD)
 buttonframe.pack(padx=15, pady=15)
 
@@ -166,19 +164,19 @@ def newscrawlclick():
         pd.DataFrame(newsoutput).to_csv(newsstring + ".csv")
             
     #frame to house enter button
-    newsframe = LabelFrame(winD, padx=5, pady=5)
-    newsframe.pack(padx=10, pady=10)
+    newsframe = ttk.LabelFrame(winD)
+    newsframe.pack(padx=15, pady=15)
 
-    newscrawlbutton = Button(newsframe, text="Scrape News Topic", padx=50, command=newstopiccrawl)
-    newscrawlbutton.grid()
+    newscrawlbutton = ttk.Button(newsframe, text="Scrape News Topic", command=newstopiccrawl)
+    newscrawlbutton.pack(padx=50)
 
 #news crawl button
-newscrawlbutton = Button(buttonframe, text="News Crawler", padx=60, pady=40, bg="black", fg="white", command=newscrawlclick)
-newscrawlbutton.grid()
+newscrawlbutton = ttk.Button(buttonframe, text="News Crawler", command=newscrawlclick)
+newscrawlbutton.pack(padx=60,pady=40)
 
 #back/exit button
 backbutton = ttk.Button(buttonframe, text="Back")
-backbutton.pack(padx=50)
+backbutton.pack(padx=50, ipadx=100)
 exitbutton = ttk.Button(buttonframe, text="Exit")
 exitbutton.pack(padx=50)
 #add buttons to grid
