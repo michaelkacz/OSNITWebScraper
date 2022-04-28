@@ -1,6 +1,8 @@
 #import * from tkinter to develop GUI
 from cgitb import text
 from tkinter import *
+from tkinter import ttk
+from ttkthemes import themed_tk as tk
 from xml.sax.xmlreader import InputSource
 import twint
 import pandas as pd
@@ -12,17 +14,18 @@ import requests
 
 #create a window for GUI
 #instantiate an instance of WinD
-winD = Tk();
+winD = tk.ThemedTk();
+winD.get_themes();
+winD.set_theme("smog");
 #change the size of winD, using geometry function
-winD.geometry("1280x768");
+
 #create title for window frame, WinD
 winD.title("OSINT Project");
 #change background of window frame
-winD.config(background="#8c1414");
 
 def RedditCrawlClick():
     #generate label
-    redditlabel = Label(winD, text="Enter your favorite subreddit:")
+    redditlabel = ttk.Label(winD, text="Enter your favorite subreddit:")
     redditlabel.pack()
     #generate entry
     redditentry = Entry(winD)
@@ -82,27 +85,27 @@ def RedditCrawlClick():
         dfReddit.to_csv(f'{subredditResult}Reddit.csv')
 
     #frame to house enter button
-    redditFrame = LabelFrame(winD, padx=5, pady=5)
-    redditFrame.pack(padx=10, pady=10)
+    redditFrame = ttk.LabelFrame(winD)
+    redditFrame.pack(padx=15, pady=15)
 
     #scrape subreddits button
-    topicbutton = Button(redditFrame, text="Get Reddit Data", padx=50, command=RedditStart)
-    topicbutton.grid()
+    topicbutton = ttk.Button(redditFrame, text="Get Reddit Data", command=RedditStart)
+    topicbutton.pack(padx=50)
 
 #end of reddit API
 
 #create frame to house buttons
-buttonframe = LabelFrame(winD, padx=5, pady=5)
-buttonframe.pack(padx=10, pady=10)
+buttonframe = ttk.LabelFrame(winD)
+buttonframe.pack(padx=15, pady=15)
 
 #Reddit button
-redditbutton = Button(buttonframe, text="Reddit", padx=60, pady=40, bg="#F28C28", command=RedditCrawlClick)
-redditbutton.grid()
+redditbutton = ttk.Button(buttonframe, text="Reddit", command=RedditCrawlClick)
+redditbutton.pack(padx=60, pady=40)
 
 #onclick to web scrape twitter
 def twittercrawlclick():
     #generate label
-    twitterlabel = Label(winD, text="Please enter topic:")
+    twitterlabel = ttk.Label(winD, text="Please enter topic:")
     twitterlabel.pack()
     #generate entry
     twitterentry = Entry(winD)
@@ -127,12 +130,12 @@ def twittercrawlclick():
     twitterframe.pack(padx=10, pady=10)
 
     #scrape twitter topic button
-    topicbutton = Button(twitterframe, text="Scrape Topic", padx=50, command=topiccrawl)
-    topicbutton.grid()
+    topicbutton = ttk.Button(twitterframe, text="Scrape Topic", command=topiccrawl)
+    topicbutton.pack(padx=50)
 
 #Twitter button
-twitterbutton = Button(buttonframe, text="Twitter", padx=60, pady=40, bg="blue", command=twittercrawlclick)
-twitterbutton.grid()
+twitterbutton = ttk.Button(buttonframe, text="Twitter", command=twittercrawlclick)
+twitterbutton.pack(padx=60,pady=40)
 
 #onclick function to open input
 def webcrawlclick():
@@ -142,15 +145,15 @@ def webcrawlclick():
     linkinput.pack()
 
 #web crawl button
-webcrawlbutton = Button(buttonframe, text="Web Crawler", padx=60, pady=40, bg="black", fg="white", command=webcrawlclick)
-webcrawlbutton.grid()
+webcrawlbutton = ttk.Button(buttonframe, text="Web Crawler", command=webcrawlclick)
+webcrawlbutton.pack(padx=60,pady=40)
 
 #back/exit button
-backbutton = Button(buttonframe, text="Back", padx=50)
-exitbutton = Button(buttonframe, text="Exit", padx=50)
+backbutton = ttk.Button(buttonframe, text="Back")
+backbutton.pack(padx=50)
+exitbutton = ttk.Button(buttonframe, text="Exit")
+exitbutton.pack(padx=50)
 #add buttons to grid
-backbutton.grid(row=3, column=0)
-exitbutton.grid(row=3, column=1)
 
 #display window frame on screen
 winD.mainloop();
