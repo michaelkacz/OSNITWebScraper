@@ -7,10 +7,16 @@ from xml.sax.xmlreader import InputSource
 import twint
 import pandas as pd
 import requests
+from pygooglenews import GoogleNews
+import json
+import time
 #To install twint:
     #pip3 install twint
     #pip3 install --user --upgrade git+https://github.com/twintproject/twint.git@origin/master#egg=twint
     #pip install aiohttp==3.7.0
+
+#To install PYGoogleNews:
+    #pip install pygooglenews
 
 #create a window for GUI
 #instantiate an instance of WinD
@@ -138,15 +144,37 @@ twitterbutton = ttk.Button(buttonframe, text="Twitter", command=twittercrawlclic
 twitterbutton.pack(padx=60,pady=40)
 
 #onclick function to open input
-def webcrawlclick():
-    crawllabel = Label(winD, text="Please enter web address:")
-    crawllabel.pack()
-    linkinput = Entry(winD)
-    linkinput.pack()
+def newscrawlclick():
+    newslabel = Label(winD, text="Please enter news topic:")
+    newslabel.pack()
+    newsinput = Entry(winD)
+    newsinput.pack()
 
-#web crawl button
-webcrawlbutton = ttk.Button(buttonframe, text="Web Crawler", command=webcrawlclick)
-webcrawlbutton.pack(padx=60,pady=40)
+    def newstopiccrawl():
+        #get string from entry in previous function
+        newsstring = newsinput.get()
+        newsarticle = GoogleNews()
+        searchnews = newsarticle.search(newsstring)
+
+        for entry in searchnews["entries"]:
+            print(entry["published"])
+            print(entry["source"])
+            print(entry["link"])
+            print(entry["title"])
+
+        newsoutput = str(searchnews)
+        pd.DataFrame(newsoutput).to_csv(newsstring + ".csv")
+            
+    #frame to house enter button
+    newsframe = LabelFrame(winD, padx=5, pady=5)
+    newsframe.pack(padx=10, pady=10)
+
+    newscrawlbutton = Button(newsframe, text="Scrape News Topic", padx=50, command=newstopiccrawl)
+    newscrawlbutton.grid()
+
+#news crawl button
+newscrawlbutton = Button(buttonframe, text="News Crawler", padx=60, pady=40, bg="black", fg="white", command=newscrawlclick)
+newscrawlbutton.grid()
 
 #back/exit button
 backbutton = ttk.Button(buttonframe, text="Back")
