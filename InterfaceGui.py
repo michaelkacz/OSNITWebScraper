@@ -154,15 +154,18 @@ def newscrawlclick():
         newsarticle = GoogleNews()
         searchnews = newsarticle.search(newsstring)
 
-        for entry in searchnews["entries"]:
-            print(entry["published"])
-            print(entry["source"])
-            print(entry["link"])
-            print(entry["title"])
+        dfNews = pd.DataFrame()
 
-        newsoutput = str(searchnews)
-        pd.DataFrame(newsoutput).to_csv(newsstring + ".csv")
-            
+        for entry in searchnews["entries"]:
+            dfNews = dfNews.append({
+                'published': entry['published'],
+                'source': entry['source'],
+                'link': entry['link'],
+                'title': entry['title']
+            }, ignore_index=True)
+
+        dfNews.to_csv(f"{newsstring}.csv")
+
     #frame to house enter button
     newsframe = ttk.LabelFrame(winD)
     newsframe.pack(padx=15, pady=15)
